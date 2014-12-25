@@ -1,0 +1,24 @@
+/*
+ * Using cookie to collect view count info
+ */
+var http = require('http');
+var cookie = require('cookie');
+
+http.createServer(function(req,res){
+	var cookies = {};
+	if(req.headers.cookie){
+		cookies = cookie.parse(req.headers.cookie);
+	}
+	var view_count = 0;
+	if(!cookies.view_count){
+		var send_cookie = cookie.serialize('view_count',1);
+		res.setHeader('set-cookie',send_cookie);
+	}else{
+		var curcount = parseInt(cookies.view_count);
+		view_count = curcount+1;
+		var send_cookie = cookie.serialize('view_count',curcount+1);
+		res.setHeader('set-cookie',send_cookie);
+	}
+	res.end(view_count.toString());
+	console.log('cookies:',cookies);
+}).listen(3000);
