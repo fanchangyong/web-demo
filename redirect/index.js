@@ -3,8 +3,10 @@ var fs = require('fs');
 
 http.createServer(function(req,res){
 	if(req.url=='/'){
-		console.log('sfdssfd');
-		fs.createReadStream('./index.html').pipe(res);
+		res.setHeader('refresh','2;url=/login.html');
+		res.end();
+		//console.log('sfdssfd');
+		//fs.createReadStream('./index.html').pipe(res);
 		//res.statusCode=301;
 		//res.setHeader('Location','http://localhost:3000/login.html');
 		//res.end('redirected');
